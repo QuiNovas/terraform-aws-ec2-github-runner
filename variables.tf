@@ -11,3 +11,8 @@ variable "region" {
   type    = string
   default = "us-east-1"
 }
+
+variable "imagebuilder_component_commands" {
+  type    = list(string)
+  default = []
+}

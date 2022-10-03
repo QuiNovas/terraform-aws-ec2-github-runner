@@ -19,8 +19,12 @@ output "runner_security_group_id" {
   value = aws_security_group.ec2_github_runner_security_group.id
 }
 
-output "python_runner_image_info" {
-  value = aws_imagebuilder_image.ec2_github_runner.output_resources
+output "ec2_runner_image_info_x86" {
+  value = aws_imagebuilder_image.ec2_github_runner_x86.output_resources
+}
+
+output "ec2_runner_image_info_arm64" {
+  value = aws_imagebuilder_image.ec2_github_runner_arm64.output_resources
 }
 
 output "runner_aws_region" {
