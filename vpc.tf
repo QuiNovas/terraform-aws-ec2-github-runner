@@ -12,7 +12,7 @@ resource "aws_vpc" "ec2_github_runner_vpc" {
 resource "aws_subnet" "ec2_github_runner_subnet" {
   vpc_id                  = aws_vpc.ec2_github_runner_vpc.id
   cidr_block              = cidrsubnet(var.base_cidr_block, 8, 2)
-  map_public_ip_on_launch = false
+  map_public_ip_on_launch = true
 
   tags = {
     Environment = "${var.environment}"
