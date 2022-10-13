@@ -28,3 +28,11 @@ resource "aws_iam_role" "ec2_github_runner_role" {
   ]
   assume_role_policy = data.aws_iam_policy_document.ec2_assume_role.json
 }
+
+resource "aws_iam_instance_profile" "ec2_github_runner_instance_profile" {
+  name = aws_iam_role.ec2_github_runner_role.name
+  role = aws_iam_role.ec2_github_runner_role.name
+  tags = {
+    Name = "AWS EC2 Github runner instance profile"
+  }
+}
