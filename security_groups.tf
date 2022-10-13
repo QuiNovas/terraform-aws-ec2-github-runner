@@ -12,6 +12,6 @@ resource "aws_security_group_rule" "ec2_github_runner_security_group_rule" {
   from_port         = 0
   to_port           = 65535
   protocol          = "all"
-  cidr_blocks       = [aws_vpc.ec2_github_runner_vpc.cidr_block]
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.ec2_github_runner_security_group.id
 }
