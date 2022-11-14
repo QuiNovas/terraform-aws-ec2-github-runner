@@ -1,18 +1,18 @@
-resource "aws_iam_user" "ec2_github_runner_user" {
+resource "aws_iam_user" "ec2_github_runner" {
   name = "${var.resource_prefix}-ec2-github-runner"
 }
 
-resource "aws_iam_access_key" "ec2_github_runner_key" {
-  user = aws_iam_user.ec2_github_runner_user.name
+resource "aws_iam_access_key" "ec2_github_runner" {
+  user = aws_iam_user.ec2_github_runner.name
 }
 
-resource "aws_iam_user_policy" "ec2_github_runner_user_policy" {
+resource "aws_iam_user_policy" "ec2_github_runner" {
   name   = "${var.resource_prefix}-ec2-github-runner-user-policy"
-  user   = aws_iam_user.ec2_github_runner_user.name
-  policy = data.aws_iam_policy_document.ec2_github_runner_policy_document.json
+  user   = aws_iam_user.ec2_github_runner.name
+  policy = data.aws_iam_policy_document.ec2_github_runner.json
 }
 
-data "aws_iam_policy_document" "ec2_github_runner_policy_document" {
+data "aws_iam_policy_document" "ec2_github_runner" {
   statement {
     sid       = ""
     effect    = "Allow"

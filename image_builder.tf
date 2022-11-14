@@ -72,7 +72,7 @@ resource "aws_imagebuilder_image_recipe" "ec2_github_runner_x86" {
 
 resource "aws_iam_instance_profile" "ec2_github_runner" {
   name = "${var.resource_prefix}-ec2-github-runner"
-  role = aws_iam_role.ec2_github_runner_imagebuilder_role.name
+  role = aws_iam_role.ec2_github_runner_imagebuilder.name
   tags = {
     Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner"

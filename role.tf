@@ -12,8 +12,8 @@ data "aws_iam_policy_document" "ec2_assume_role" {
   }
 }
 
-resource "aws_iam_role" "ec2_github_runner_imagebuilder_role" {
-  name = "${var.resource_prefix}-ec2-github-runner-imagebuilder-role"
+resource "aws_iam_role" "ec2_github_runner_imagebuilder" {
+  name = "${var.resource_prefix}-ec2-github-runner-imagebuilder"
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
     "arn:aws:iam::aws:policy/EC2InstanceProfileForImageBuilder"
@@ -21,17 +21,17 @@ resource "aws_iam_role" "ec2_github_runner_imagebuilder_role" {
   assume_role_policy = data.aws_iam_policy_document.ec2_assume_role.json
 }
 
-resource "aws_iam_role" "ec2_github_runner_role" {
-  name = "${var.resource_prefix}-ec2-github-runner-role"
+resource "aws_iam_role" "ec2_github_runner" {
+  name = "${var.resource_prefix}-ec2-github-runner"
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
   ]
   assume_role_policy = data.aws_iam_policy_document.ec2_assume_role.json
 }
 
-resource "aws_iam_instance_profile" "ec2_github_runner_instance_profile" {
-  name = aws_iam_role.ec2_github_runner_role.name
-  role = aws_iam_role.ec2_github_runner_role.name
+resource "aws_iam_instance_profile" "ec2_github_runner" {
+  name = aws_iam_role.ec2_github_runner.name
+  role = aws_iam_role.ec2_github_runner.name
   tags = {
     Name = "AWS EC2 Github runner instance profile"
   }

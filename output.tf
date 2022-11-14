@@ -1,26 +1,26 @@
 output "runner_aws_access_key_id" {
-  value       = aws_iam_access_key.ec2_github_runner_key.id
+  value       = aws_iam_access_key.ec2_github_runner.id
   description = "The access key generated for the EC2 github runner."
 }
 
 output "runner_aws_secret_access_key" {
-  value       = aws_iam_access_key.ec2_github_runner_key.secret
+  value       = aws_iam_access_key.ec2_github_runner.secret
   sensitive   = true
   description = "The secret key generated for the EC2 github runner."
 }
 
 output "runner_iam_role_name" {
-  value       = aws_iam_role.ec2_github_runner_role.name
+  value       = aws_iam_role.ec2_github_runner.name
   description = "The name of the EC2 github runner IAM role."
 }
 
 output "runner_subnet_id" {
-  value       = aws_subnet.ec2_github_runner_subnet.id
+  value       = aws_subnet.ec2_github_runner.id
   description = "ID of the EC2 github runner subnet."
 }
 
 output "runner_security_group_id" {
-  value       = aws_security_group.ec2_github_runner_security_group.id
+  value       = aws_security_group.ec2_github_runner.id
   description = "ID of the EC2 github runner security group."
 }
 
