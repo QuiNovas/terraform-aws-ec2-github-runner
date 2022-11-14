@@ -57,6 +57,3 @@ data "aws_iam_policy_document" "ec2_github_runner_policy_document" {
     }
   }
 }
-
-data "aws_region" "current" {
-}
