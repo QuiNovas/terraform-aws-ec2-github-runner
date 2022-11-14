@@ -117,7 +117,7 @@ resource "aws_imagebuilder_distribution_configuration" "ec2_github_runner" {
   name = "ec2_github_runner"
   distribution {
     ami_distribution_configuration {
-      ami_taqs = {
+      ami_tags = {
         Environment = "${var.resource_prefix}"
         Name        = "AWS EC2 Github Runner"
       }
