@@ -1,4 +1,4 @@
-resource "aws_vpc" "ec2_github_runner_vpc" {
+resource "aws_vpc" "ec2_github_runner" {
   cidr_block           = var.base_cidr_block
   enable_dns_support   = true
   enable_dns_hostnames = true
@@ -9,8 +9,8 @@ resource "aws_vpc" "ec2_github_runner_vpc" {
   }
 }
 
-resource "aws_subnet" "ec2_github_runner_subnet" {
-  vpc_id                  = aws_vpc.ec2_github_runner_vpc.id
+resource "aws_subnet" "ec2_github_runner" {
+  vpc_id                  = aws_vpc.ec2_github_runner.id
   cidr_block              = cidrsubnet(var.base_cidr_block, 8, 2)
   map_public_ip_on_launch = true
 
@@ -20,8 +20,8 @@ resource "aws_subnet" "ec2_github_runner_subnet" {
   }
 }
 
-resource "aws_internet_gateway" "ec2_github_runner_internet_gateway" {
-  vpc_id = aws_vpc.ec2_github_runner_vpc.id
+resource "aws_internet_gateway" "ec2_github_runner" {
+  vpc_id = aws_vpc.ec2_github_runner.id
 
   tags = {
     Environment = "${var.resource_prefix}"
@@ -29,11 +29,16 @@ resource "aws_internet_gateway" "ec2_github_runner_internet_gateway" {
   }
 }
 
-resource "aws_route_table" "ec2_github_runner_route_table" {
-  vpc_id = aws_vpc.ec2_github_runner_vpc.id
+resource "aws_default_route_table" "ec2_github_runner" {
+  default_route_table_id = aws_vpc.ec2_github_runner.default_route_table_id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.ec2_github_runner_internet_gateway.id
+    gateway_id = aws_internet_gateway.ec2_github_runner.id
+  }
+
+  tags = {
+    Environment = "${var.resource_prefix}"
+    Name        = "AWS EC2 Github runner"
   }
 }
