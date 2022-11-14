@@ -23,6 +23,7 @@ resource "aws_imagebuilder_component" "ec2_github_runner" {
 }
 
 resource "aws_imagebuilder_image_recipe" "ec2_github_runner_arm64" {
+  count = var.architecture == "all" || var.architecture == "arm64" ? 1 : 0
   component {
     component_arn = aws_imagebuilder_component.ec2_github_runner.arn
   }
@@ -46,6 +47,7 @@ resource "aws_imagebuilder_image_recipe" "ec2_github_runner_arm64" {
 }
 
 resource "aws_imagebuilder_image_recipe" "ec2_github_runner_x86" {
+  count = var.architecture == "all" || var.architecture == "x86" ? 1 : 0
   component {
     component_arn = aws_imagebuilder_component.ec2_github_runner.arn
   }
@@ -78,6 +80,7 @@ resource "aws_iam_instance_profile" "ec2_github_runner" {
 }
 
 resource "aws_imagebuilder_infrastructure_configuration" "ec2_github_runner_arm64" {
+  count                         = var.architecture == "all" || var.architecture == "arm64" ? 1 : 0
   instance_profile_name         = aws_iam_instance_profile.ec2_github_runner.name
   name                          = "${var.resource_prefix}-ec2-github-runner-arm64"
   instance_types                = ["m6g.xlarge", "m6gd.xlarge"]
@@ -89,6 +92,7 @@ resource "aws_imagebuilder_infrastructure_configuration" "ec2_github_runner_arm6
 }
 
 resource "aws_imagebuilder_infrastructure_configuration" "ec2_github_runner_x86" {
+  count                         = var.architecture == "all" || var.architecture == "x86" ? 1 : 0
   instance_profile_name         = aws_iam_instance_profile.ec2_github_runner.name
   name                          = "${var.resource_prefix}-ec2-github-runner-x86"
   instance_types                = ["m5d.xlarge", "m6a.xlarge"]
@@ -115,9 +119,10 @@ resource "aws_imagebuilder_distribution_configuration" "ec2_github_runner" {
 }
 
 resource "aws_imagebuilder_image" "ec2_github_runner_arm64" {
+  count                            = var.architecture == "all" || var.architecture == "arm64" ? 1 : 0
   distribution_configuration_arn   = aws_imagebuilder_distribution_configuration.ec2_github_runner.arn
-  image_recipe_arn                 = aws_imagebuilder_image_recipe.ec2_github_runner_arm64.arn
-  infrastructure_configuration_arn = aws_imagebuilder_infrastructure_configuration.ec2_github_runner_arm64.arn
+  image_recipe_arn                 = aws_imagebuilder_image_recipe.ec2_github_runner_arm64[0].arn
+  infrastructure_configuration_arn = aws_imagebuilder_infrastructure_configuration.ec2_github_runner_arm64[0].arn
   tags = {
     Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner arm64"
@@ -125,14 +130,15 @@ resource "aws_imagebuilder_image" "ec2_github_runner_arm64" {
 }
 
 resource "aws_imagebuilder_image" "ec2_github_runner_x86" {
+  count                            = var.architecture == "all" || var.architecture == "x86" ? 1 : 0
   distribution_configuration_arn   = aws_imagebuilder_distribution_configuration.ec2_github_runner.arn
-  image_recipe_arn                 = aws_imagebuilder_image_recipe.ec2_github_runner_x86.arn
-  infrastructure_configuration_arn = aws_imagebuilder_infrastructure_configuration.ec2_github_runner_x86.arn
+  image_recipe_arn                 = aws_imagebuilder_image_recipe.ec2_github_runner_x86[0].arn
+  infrastructure_configuration_arn = aws_imagebuilder_infrastructure_configuration.ec2_github_runner_x86[0].arn
   tags = {
     Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner x86"
   }
   depends_on = [
-    aws_imagebuilder_image.ec2_github_runner_arm64
+    aws_imagebuilder_image.ec2_github_runner_arm64[0]
   ]
 }
