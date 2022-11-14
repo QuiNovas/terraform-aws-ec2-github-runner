@@ -1,5 +1,5 @@
 resource "aws_iam_user" "ec2_github_runner_user" {
-  name = "${var.environment}-ec2-github-runner"
+  name = "${var.resource_prefix}-ec2-github-runner"
 }
 
 resource "aws_iam_access_key" "ec2_github_runner_key" {
@@ -7,7 +7,7 @@ resource "aws_iam_access_key" "ec2_github_runner_key" {
 }
 
 resource "aws_iam_user_policy" "ec2_github_runner_user_policy" {
-  name   = "${var.environment}-ec2-github-runner-user-policy"
+  name   = "${var.resource_prefix}-ec2-github-runner-user-policy"
   user   = aws_iam_user.ec2_github_runner_user.name
   policy = data.aws_iam_policy_document.ec2_github_runner_policy_document.json
 }
@@ -56,4 +56,7 @@ data "aws_iam_policy_document" "ec2_github_runner_policy_document" {
       values   = ["RunInstances"]
     }
   }
+}
+
+data "aws_region" "current" {
 }

@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "ec2_assume_role" {
 }
 
 resource "aws_iam_role" "ec2_github_runner_imagebuilder_role" {
-  name = "${var.environment}-ec2-github-runner-imagebuilder-role"
+  name = "${var.resource_prefix}-ec2-github-runner-imagebuilder-role"
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
     "arn:aws:iam::aws:policy/EC2InstanceProfileForImageBuilder"
@@ -22,7 +22,7 @@ resource "aws_iam_role" "ec2_github_runner_imagebuilder_role" {
 }
 
 resource "aws_iam_role" "ec2_github_runner_role" {
-  name = "${var.environment}-ec2-github-runner-role"
+  name = "${var.resource_prefix}-ec2-github-runner-role"
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
   ]

@@ -1,5 +1,5 @@
 resource "aws_imagebuilder_component" "ec2_github_runner" {
-  name                  = "${var.environment}-ec2-github-runner"
+  name                  = "${var.resource_prefix}-ec2-github-runner"
   platform              = "Linux"
   version               = "1.0.0"
   supported_os_versions = ["Amazon Linux 2"]
@@ -11,13 +11,13 @@ resource "aws_imagebuilder_component" "ec2_github_runner" {
         inputs = {
           commands = local.image_builder_commands
         }
-        name = "${var.environment}-ec2-github-runner"
+        name = "${var.resource_prefix}-ec2-github-runner"
       }]
     }]
     schemaVersion = "1.0"
   })
   tags = {
-    Environment = "${var.environment}"
+    Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner"
   }
 }
@@ -36,11 +36,11 @@ resource "aws_imagebuilder_image_recipe" "ec2_github_runner_arm64" {
     }
   }
 
-  name         = "${var.environment}-ec2-github-runner-arm64"
-  parent_image = "arn:aws:imagebuilder:${var.region}:aws:image/amazon-linux-2-arm64/x.x.x"
+  name         = "${var.resource_prefix}-ec2-github-runner-arm64"
+  parent_image = "arn:aws:imagebuilder:${data.aws_region.current.name}:aws:image/amazon-linux-2-arm64/x.x.x"
   version      = "1.0.0"
   tags = {
-    Environment = "${var.environment}"
+    Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner"
   }
 }
@@ -59,42 +59,42 @@ resource "aws_imagebuilder_image_recipe" "ec2_github_runner_x86" {
     }
   }
 
-  name         = "${var.environment}-ec2-github-runner-x86"
-  parent_image = "arn:aws:imagebuilder:${var.region}:aws:image/amazon-linux-2-x86/x.x.x"
+  name         = "${var.resource_prefix}-ec2-github-runner-x86"
+  parent_image = "arn:aws:imagebuilder:${data.aws_region.current.name}:aws:image/amazon-linux-2-x86/x.x.x"
   version      = "1.0.0"
   tags = {
-    Environment = "${var.environment}"
+    Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner"
   }
 }
 
 resource "aws_iam_instance_profile" "ec2_github_runner" {
-  name = "${var.environment}-ec2-github-runner"
+  name = "${var.resource_prefix}-ec2-github-runner"
   role = aws_iam_role.ec2_github_runner_imagebuilder_role.name
   tags = {
-    Environment = "${var.environment}"
+    Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner"
   }
 }
 
 resource "aws_imagebuilder_infrastructure_configuration" "ec2_github_runner_arm64" {
   instance_profile_name         = aws_iam_instance_profile.ec2_github_runner.name
-  name                          = "${var.environment}-ec2-github-runner-arm64"
+  name                          = "${var.resource_prefix}-ec2-github-runner-arm64"
   instance_types                = ["m6g.xlarge", "m6gd.xlarge"]
   terminate_instance_on_failure = true
   tags = {
-    Environment = "${var.environment}"
+    Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner"
   }
 }
 
 resource "aws_imagebuilder_infrastructure_configuration" "ec2_github_runner_x86" {
   instance_profile_name         = aws_iam_instance_profile.ec2_github_runner.name
-  name                          = "${var.environment}-ec2-github-runner-x86"
+  name                          = "${var.resource_prefix}-ec2-github-runner-x86"
   instance_types                = ["m5d.xlarge", "m6a.xlarge"]
   terminate_instance_on_failure = true
   tags = {
-    Environment = "${var.environment}"
+    Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner"
   }
 }
@@ -106,10 +106,10 @@ resource "aws_imagebuilder_distribution_configuration" "ec2_github_runner" {
     ami_distribution_configuration {
       name = "ec2-github-runner-{{ imagebuilder:buildDate }}"
     }
-    region = var.region
+    region = data.aws_region.current.name
   }
   tags = {
-    Environment = "${var.environment}"
+    Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner"
   }
 }
@@ -119,7 +119,7 @@ resource "aws_imagebuilder_image" "ec2_github_runner_arm64" {
   image_recipe_arn                 = aws_imagebuilder_image_recipe.ec2_github_runner_arm64.arn
   infrastructure_configuration_arn = aws_imagebuilder_infrastructure_configuration.ec2_github_runner_arm64.arn
   tags = {
-    Environment = "${var.environment}"
+    Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner arm64"
   }
 }
@@ -129,7 +129,7 @@ resource "aws_imagebuilder_image" "ec2_github_runner_x86" {
   image_recipe_arn                 = aws_imagebuilder_image_recipe.ec2_github_runner_x86.arn
   infrastructure_configuration_arn = aws_imagebuilder_infrastructure_configuration.ec2_github_runner_x86.arn
   tags = {
-    Environment = "${var.environment}"
+    Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner x86"
   }
   depends_on = [

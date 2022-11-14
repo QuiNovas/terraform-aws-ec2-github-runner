@@ -1,8 +1,8 @@
 resource "aws_security_group" "ec2_github_runner_security_group" {
-  name   = "${var.environment}-ec2-github-runner-security-group"
+  name   = "${var.resource_prefix}-ec2-github-runner-security-group"
   vpc_id = aws_vpc.ec2_github_runner_vpc.id
   tags = {
-    Environment = "${var.environment}"
+    Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner"
   }
 }

@@ -4,7 +4,7 @@ resource "aws_vpc" "ec2_github_runner_vpc" {
   enable_dns_hostnames = true
 
   tags = {
-    Environment = var.environment
+    Environment = var.resource_prefix
     Name        = "AWS EC2 Github runner"
   }
 }
@@ -15,7 +15,7 @@ resource "aws_subnet" "ec2_github_runner_subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Environment = "${var.environment}"
+    Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner"
   }
 }
@@ -24,7 +24,7 @@ resource "aws_internet_gateway" "ec2_github_runner_internet_gateway" {
   vpc_id = aws_vpc.ec2_github_runner_vpc.id
 
   tags = {
-    Environment = "${var.environment}"
+    Environment = "${var.resource_prefix}"
     Name        = "AWS EC2 Github runner"
   }
 }
