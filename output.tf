@@ -35,6 +35,6 @@ output "ec2_runner_image_info_arm64" {
 }
 
 output "runner_aws_region" {
-  value       = var.region
+  value       = data.aws_region.current.name
   description = "The EC2 github runner region."
 }
