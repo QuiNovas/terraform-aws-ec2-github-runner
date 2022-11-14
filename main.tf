@@ -5,7 +5,7 @@ resource "aws_vpc" "ec2_github_runner" {
 
   tags = {
     Environment = var.resource_prefix
-    Name        = "AWS EC2 Github runner"
+    Name        = "AWS EC2 Github Runner"
   }
 }
 
@@ -16,7 +16,7 @@ resource "aws_subnet" "ec2_github_runner" {
 
   tags = {
     Environment = "${var.resource_prefix}"
-    Name        = "AWS EC2 Github runner"
+    Name        = "AWS EC2 Github Runner"
   }
 }
 
@@ -25,7 +25,7 @@ resource "aws_internet_gateway" "ec2_github_runner" {
 
   tags = {
     Environment = "${var.resource_prefix}"
-    Name        = "AWS EC2 Github runner"
+    Name        = "AWS EC2 Github Runner"
   }
 }
 
@@ -39,6 +39,6 @@ resource "aws_default_route_table" "ec2_github_runner" {
 
   tags = {
     Environment = "${var.resource_prefix}"
-    Name        = "AWS EC2 Github runner"
+    Name        = "AWS EC2 Github Runner"
   }
 }

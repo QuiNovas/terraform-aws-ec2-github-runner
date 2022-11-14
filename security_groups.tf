@@ -4,7 +4,7 @@ resource "aws_security_group" "ec2_github_runner" {
 
   tags = {
     Environment = "${var.resource_prefix}"
-    Name        = "AWS EC2 Github runner"
+    Name        = "AWS EC2 Github Runner"
   }
 }
 
