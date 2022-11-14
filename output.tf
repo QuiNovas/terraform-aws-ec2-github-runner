@@ -25,12 +25,12 @@ output "runner_security_group_id" {
 }
 
 output "ec2_runner_image_info_x86" {
-  value       = aws_imagebuilder_image.ec2_github_runner_x86.output_resources
+  value       = var.architecture == "all" || var.architecture == "x86" ? aws_imagebuilder_image.ec2_github_runner_x86[0].output_resources : []
   description = "x86_64 architecture image information."
 }
 
 output "ec2_runner_image_info_arm64" {
-  value       = aws_imagebuilder_image.ec2_github_runner_arm64.output_resources
+  value       = var.architecture == "all" || var.architecture == "arm64" ? aws_imagebuilder_image.ec2_github_runner_arm64[0].output_resources : []
   description = "arm64 architecture image information."
 }
 
