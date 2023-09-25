@@ -1,6 +1,6 @@
 locals {
   default_commands = [
-    "sudo yum update",
+    "sudo yum -y update",
     "sudo yum -y install docker git gcc openssl-devel bzip2-devel libffi-devel",
     "sudo systemctl enable docker"
   ]
