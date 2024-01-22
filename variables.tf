@@ -1,6 +1,11 @@
-variable "resource_prefix" {
+variable "architecture" {
+  default     = "all"
+  description = "Type of image architecture."
   type        = string
-  description = "The EC2 github runner environment."
+  validation {
+    condition     = contains(["arm64", "x86", "all"], var.architecture)
+    error_message = "Valid values for variable: \"architecture\" are (arm64, x86, all)."
+  }
 }
 
 variable "base_cidr_block" {
@@ -9,17 +14,12 @@ variable "base_cidr_block" {
 }
 
 variable "imagebuilder_component_commands" {
-  type        = list(string)
-  default     = []
   description = "Linux commands for imagebuilder component."
+  default     = []
+  type        = list(string)
 }
 
-variable "architecture" {
+variable "resource_prefix" {
+  description = "The EC2 github runner environment."
   type        = string
-  description = "Type of image architecture."
-  default     = "all"
-  validation {
-    condition     = contains(["arm64", "x86", "all"], var.architecture)
-    error_message = "Valid values for variable: \"architecture\" are (arm64, x86, all)."
-  }
 }
