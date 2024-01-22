@@ -1,3 +1,13 @@
+variable "amazon_linux_version" {
+  default     = "2"
+  description = "The Amazon Linux major version. Either \"2\" or \"2023\"."
+  type        = string
+  validation {
+    condition     = contains(["2", "2023"], var.amazon_linux_version)
+    error_message = "Valid values for variable: \"amazon_linux_version\" are (2, 2023)."
+  }
+}
+
 variable "architecture" {
   default     = "all"
   description = "Type of image architecture."

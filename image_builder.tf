@@ -38,7 +38,7 @@ resource "aws_imagebuilder_image_recipe" "ec2_github_runner_arm64" {
   }
 
   name         = "${var.resource_prefix}-ec2-github-runner-arm64"
-  parent_image = "arn:aws:imagebuilder:${data.aws_region.current.name}:aws:image/amazon-linux-2-arm64/x.x.x"
+  parent_image = "arn:aws:imagebuilder:${data.aws_region.current.name}:aws:image/amazon-linux-${var.amazon_linux_version}-arm64/x.x.x"
   version      = "1.0.0"
   tags = {
     Environment = "${var.resource_prefix}"
@@ -62,7 +62,7 @@ resource "aws_imagebuilder_image_recipe" "ec2_github_runner_x86" {
   }
 
   name         = "${var.resource_prefix}-ec2-github-runner-x86"
-  parent_image = "arn:aws:imagebuilder:${data.aws_region.current.name}:aws:image/amazon-linux-2-x86/x.x.x"
+  parent_image = "arn:aws:imagebuilder:${data.aws_region.current.name}:aws:image/amazon-linux-${var.amazon_linux_version}-x86/x.x.x"
   version      = "1.0.0"
   tags = {
     Environment = "${var.resource_prefix}"
