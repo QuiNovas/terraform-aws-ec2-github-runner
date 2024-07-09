@@ -9,6 +9,11 @@ output "runner_aws_secret_access_key" {
   description = "The secret key generated for the EC2 github runner."
 }
 
+output "runner_home_dir" {
+  value       = local.runner_home_dir
+  description = "The directory where pre-installed actions-runner software and scripts are located."
+}
+
 output "runner_iam_role_name" {
   value       = aws_iam_role.ec2_github_runner.name
   description = "The name of the EC2 github runner IAM role."
@@ -25,12 +30,12 @@ output "runner_security_group_id" {
 }
 
 output "ec2_runner_image_info_x86" {
-  value       = var.architecture == "all" || var.architecture == "x86" ? aws_imagebuilder_image.ec2_github_runner_x86[0].output_resources : []
+  value       = var.architecture == "x86" ? aws_imagebuilder_image.ec2_github_runner_x86[0].output_resources : []
   description = "x86_64 architecture image information."
 }
 
 output "ec2_runner_image_info_arm64" {
-  value       = var.architecture == "all" || var.architecture == "arm64" ? aws_imagebuilder_image.ec2_github_runner_arm64[0].output_resources : []
+  value       = var.architecture == "arm64" ? aws_imagebuilder_image.ec2_github_runner_arm64[0].output_resources : []
   description = "arm64 architecture image information."
 }
 
