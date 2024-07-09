@@ -22,3 +22,8 @@ variable "resource_prefix" {
   description = "The EC2 github runner environment."
   type        = string
 }
+
+variable "runner_version" {
+  description = "The version if the Github actions runner."
+  type        = string
+}
