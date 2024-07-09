@@ -1,10 +1,9 @@
 variable "architecture" {
-  default     = "all"
   description = "Type of image architecture."
   type        = string
   validation {
-    condition     = contains(["arm64", "x86", "all"], var.architecture)
-    error_message = "Valid values for variable: \"architecture\" are (arm64, x86, all)."
+    condition     = contains(["arm64", "x86"], var.architecture)
+    error_message = "Valid values for variable: \"architecture\" are (arm64, x86)."
   }
 }
 
