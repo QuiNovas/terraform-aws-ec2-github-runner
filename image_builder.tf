@@ -2,7 +2,7 @@ resource "aws_imagebuilder_component" "ec2_github_runner" {
   name                  = "${var.resource_prefix}-ec2-github-runner"
   platform              = "Linux"
   version               = "1.0.0"
-  supported_os_versions = ["Amazon Linux 2"]
+  supported_os_versions = ["Amazon Linux 2023"]
   data = yamlencode({
     phases = [{
       name = "build"
@@ -38,7 +38,7 @@ resource "aws_imagebuilder_image_recipe" "ec2_github_runner_arm64" {
   }
 
   name         = "${var.resource_prefix}-ec2-github-runner-arm64"
-  parent_image = "arn:aws:imagebuilder:${data.aws_region.current.name}:aws:image/amazon-linux-${var.amazon_linux_version}-arm64/x.x.x"
+  parent_image = "arn:aws:imagebuilder:${data.aws_region.current.name}:aws:image/amazon-linux-2023-arm64/x.x.x"
   version      = "1.0.0"
   tags = {
     Environment = "${var.resource_prefix}"
@@ -62,7 +62,7 @@ resource "aws_imagebuilder_image_recipe" "ec2_github_runner_x86" {
   }
 
   name         = "${var.resource_prefix}-ec2-github-runner-x86"
-  parent_image = "arn:aws:imagebuilder:${data.aws_region.current.name}:aws:image/amazon-linux-${var.amazon_linux_version}-x86/x.x.x"
+  parent_image = "arn:aws:imagebuilder:${data.aws_region.current.name}:aws:image/amazon-linux-2023-x86/x.x.x"
   version      = "1.0.0"
   tags = {
     Environment = "${var.resource_prefix}"
@@ -92,7 +92,7 @@ resource "aws_imagebuilder_infrastructure_configuration" "ec2_github_runner_arm6
   count                         = var.architecture == "all" || var.architecture == "arm64" ? 1 : 0
   instance_profile_name         = aws_iam_instance_profile.ec2_github_runner_imagebuilder.name
   name                          = "${var.resource_prefix}-ec2-github-runner-arm64"
-  instance_types                = ["m6g.xlarge", "m6gd.xlarge"]
+  instance_types                = ["m7g.xlarge", "m7gd.xlarge"]
   terminate_instance_on_failure = true
   tags = {
     Environment = "${var.resource_prefix}"
@@ -104,7 +104,7 @@ resource "aws_imagebuilder_infrastructure_configuration" "ec2_github_runner_x86"
   count                         = var.architecture == "all" || var.architecture == "x86" ? 1 : 0
   instance_profile_name         = aws_iam_instance_profile.ec2_github_runner_imagebuilder.name
   name                          = "${var.resource_prefix}-ec2-github-runner-x86"
-  instance_types                = ["m5d.xlarge", "m6a.xlarge"]
+  instance_types                = ["m7i.xlarge", "m7i-flex.xlarge", "m7a.xlarge"]
   terminate_instance_on_failure = true
   tags = {
     Environment = "${var.resource_prefix}"
