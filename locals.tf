@@ -1,7 +1,7 @@
 locals {
   default_commands = [
     "sudo yum -y update",
-    "sudo yum -y install docker git gcc gcc-c++ make",
+    "sudo yum -y install docker git gcc gcc-c++ libicu make",
     "curl -sL https://rpm.nodesource.com/setup_20.x | sudo -E bash -",
     "sudo yum install -y nodejs",
     "sudo systemctl enable docker"
